@@ -20,13 +20,9 @@ class SystemHandler extends \Thinker\Framework\Model
 	 */
 	public function process_message($post)
 	{
-		error_log("Processing System Event");
-		error_log($post->text);
-		error_log($post->message_contains("added") && $post->message_contains("to the group"));
 		// Determine the action that happened in the message
 		if($post->message_contains("has joined the group") || $post->message_contains("has rejoined the group") || ($post->message_contains("added") && $post->message_contains("to the group")))
 		{
-			error_log("User added!");
 			// Handle action with member_added()
 			$this->member_added($post);
 		}
@@ -68,14 +64,13 @@ class SystemHandler extends \Thinker\Framework\Model
 				// Cool! Let's get the list of current members in the group directly from GroupMe
 				$request = new APIRequest("/groups/{$post->group_id}?token=$token", "GET");
 				$result = $request->execute();
-				error_log(print_r($result, true));
+
 				// Check if we got the expected result
 				if(array_key_exists('response', $result) && array_key_exists('members', $result['response']))
 				{
 					// Verify each user is currently a member per our database
 					foreach($result["response"]["members"] as $mem)
 					{
-						error_log(print_r($mem, true));
 						// Declare local variables
 						$user_id = $mem["user_id"]; // Global User ID
 						$member_id = $mem["id"]; // Membership ID is unique to the user+group
