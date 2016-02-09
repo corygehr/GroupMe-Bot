@@ -90,12 +90,14 @@ class SystemHandler extends \Thinker\Framework\Model
 						{
 							error_log("Removing $name");
 							// User is not in this group according to us. Get em out!
-							$removeCurl = curl_init("https://api.groupme.com/v3/groups/{$post->group_id}/members/$member_id/remove?token=$token");
+							$url = "https://api.groupme.com/v3/groups/{$post->group_id}/members/$member_id/remove?token=$token";
+							error_log($url);
+							$removeCurl = curl_init($url);
 							$result = curl_exec($removeCurl);
 							error_log(curl_getinfo($http, CURLINFO_HTTP_CODE));
 
 							// Alert the group that someone was removed
-							$message->text =  "Tango down: " . $name;
+							$message->text = "Tango down: " . $name;
 							$message->send();
 							curl_close($removeCurl);
 						}
