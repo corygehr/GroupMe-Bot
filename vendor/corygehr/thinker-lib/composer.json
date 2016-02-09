@@ -1,0 +1,34 @@
+ {
+ 	"name": "corygehr/thinker-lib",
+  	"description": "THINKer Framework Core Library",
+ 	"type": "library",
+ 	"keywords": ["framework"],
+ 	"homepage": "https://github.com/corygehr/corygehr-thinker-lib",
+ 	"license": "BSD-3-Clause",
+ 	"authors": [
+ 		{
+ 			"name": "Cory Gehr",
+ 			"email": "gehrc621@gmail.com",
+ 			"homepage": "http://www.corygehr.com",
+ 			"role": "Lead Developer"
+ 		}
+ 	],
+ 	"support": {
+ 		"email": "gehrc621@gmail.com",
+ 		"source": "https://github.com/corygehr/corygehr-thinker-lib"
+ 	},
+ 	"require": {
+ 		"php": ">=5.3"
+ 	},
+ 	"autoload": {
+        "psr-4": { 
+        	"Thinker\\": "src"
+        }
+    },
+    "autoload-dev": {
+    	"psr-4": {
+    		"Thinker\\Tests\\": "tests/"
+    	}
+    },
+    "prefer-stable": true
+ }
