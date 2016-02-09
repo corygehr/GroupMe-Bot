@@ -87,8 +87,8 @@ class SystemHandler extends \Thinker\Framework\Model
 							// User is not in this group according to us. Get em out!
 							$url = "https://api.groupme.com/v3/groups/{$post->group_id}/members/$member_id/remove?token=$token";
 							error_log($url);
-							curl_setopt($ch, CURLOPT_POST, 1);
 							$removeCurl = curl_init($url);
+							curl_setopt($removeCurl, CURLOPT_POST, 1);
 							$result = curl_exec($removeCurl);
 							error_log(curl_getinfo($http, CURLINFO_HTTP_CODE));
 
