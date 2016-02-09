@@ -776,7 +776,7 @@ class CommandHandler extends \Thinker\Framework\Model
 
 		if(count($cmd_params) == 1)
 		{
-			$toggleMode = strtolower($cmd_params);
+			$toggleMode = strtolower($cmd_params[0]);
 
 			if($toggleMode == 'on')
 			{
