@@ -22,7 +22,7 @@ class SystemHandler extends \Thinker\Framework\Model
 	{
 		error_log("Processing System Event");
 		// Determine the action that happened in the message
-		if($post->message_contains("has joined the group") || $post->message_contains("has rejoined the group"))
+		if($post->message_contains("joined") || $post->message_contains("rejoined"))
 		{
 			error_log("User added!");
 			// Handle action with member_added()
@@ -64,16 +64,18 @@ class SystemHandler extends \Thinker\Framework\Model
 			// We have a token
 			if($token)
 			{
+				error_log("Token is: " . $token);
 				// Cool! Let's get the list of current members in the group directly from GroupMe
 				$request = new APIRequest("/groups/{$post->group_id}?token=$token", "GET");
 				$result = $request->execute();
-
+				error_log(print_r($result, true));
 				// Check if we got the expected result
 				if(array_key_exists('response', $result) && array_key_exists('members', $result['response']))
 				{
 					// Verify each user is currently a member per our database
 					foreach($result["response"]["members"] as $mem)
 					{
+						error_log(print_r($mem, true));
 						// Declare local variables
 						$user_id = $mem["user_id"]; // Global User ID
 						$member_id = $mem["id"]; // Membership ID is unique to the user+group
@@ -86,6 +88,7 @@ class SystemHandler extends \Thinker\Framework\Model
 						// If this block executes, the user was not listed in the group in our records
 						if(!$_DB['botstore']->doQueryAns($query, $params))
 						{
+							error_log("Removing $name");
 							// User is not in this group according to us. Get em out!
 							$request = new APIRequest("/groups/{$post->group_id}/members/$mem_id/remove?token=$token", "POST");
 							$removeResult = $request->execute();
