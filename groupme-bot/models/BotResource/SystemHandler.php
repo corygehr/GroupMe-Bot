@@ -21,6 +21,8 @@ class SystemHandler extends \Thinker\Framework\Model
 	public function process_message($post)
 	{
 		error_log("Processing System Event");
+		error_log($post->text);
+		error_log($post->message_contains("added") && $post->message_contains("to the group"));
 		// Determine the action that happened in the message
 		if($post->message_contains("has joined the group") || $post->message_contains("has rejoined the group") || ($post->message_contains("added") && $post->message_contains("to the group")))
 		{
