@@ -21,6 +21,7 @@ return array(
     'GroupMeBot\\BotResource\\Image' => $baseDir . '/groupme-bot/models/BotResource/Image.php',
     'GroupMeBot\\BotResource\\Location' => $baseDir . '/groupme-bot/models/BotResource/Location.php',
     'GroupMeBot\\BotResource\\Mention' => $baseDir . '/groupme-bot/models/BotResource/Mention.php',
+    'GroupMeBot\\BotResource\\SystemHandler' => $baseDir . '/groupme-bot/models/BotResource/SystemHandler.php',
     'GroupMeBot\\Callback' => $baseDir . '/groupme-bot/controllers/Callback/Callback.php',
     'Html' => $baseDir . '/shared/views/Html/Html.php',
     'Json' => $baseDir . '/shared/views/Json/Json.php',

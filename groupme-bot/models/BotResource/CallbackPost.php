@@ -402,4 +402,17 @@ class CallbackPost extends \Thinker\Framework\Model
 	{
 		return $this->received;
 	}
+
+	/**
+	 * system_message()
+	 * Returns true if this is a message from the GroupMe service
+	 *
+	 * @author Cory Gehr
+	 * @access public
+	 * @return True if Yes, False if No
+	 */
+	public function system_message()
+	{
+		return ($this->sender_type == 'system');
+	}
 }

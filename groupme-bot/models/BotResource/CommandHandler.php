@@ -35,7 +35,8 @@ class CommandHandler extends \Thinker\Framework\Model
 
 		$result = $_DB['botstore']->doQueryAns($query, $params);
 
-		if(method_exists($this, $result)) {
+		if(method_exists($this, $result))
+		{
 			// Call method
 			$this->{$result}($command, $post);
 		}
@@ -744,6 +745,99 @@ class CommandHandler extends \Thinker\Framework\Model
 						$response = "You haven't posted any images recently to tag. I'll only go back and tag the last image you posted if it was submitted up to five minutes ago. Sorry, I'm needy.";
 					}
 				}
+			}
+		}
+
+		// Send message
+		$message->text = $response;
+		$message->send();
+	}
+
+	/**
+	 * toggle_group_lock()
+	 * Toggles the group protection mechanism
+	 *
+	 * @author Cory Gehr
+	 * @access private
+	 * @param command Command used to call this method
+	 * @param post CallbackPost object containing the original message
+	 */
+	private function toggle_group_lock($command, $post)
+	{
+		global $_DB;
+
+		// Create the CallbackResponse
+		$message = new CallbackResponse($post->group_id);
+
+		$response = "";
+
+		// Get the parameters
+		$cmd_params = $post->get_command_parameters();
+
+		if($cmd_params == 1)
+		{
+			$toggleMode = strtolower($cmd_params);
+
+			if($toggleMode == 'on')
+			{
+				$query = "UPDATE groups 
+						  SET membership_locked = 1 
+						  WHERE group_Id = :groupid 
+						  LIMIT 1";
+				$params = array(':groupid' => $post->group_id);
+
+				if($_DB['botstore']->doQuery($query, $params))
+				{
+					$response = "Your group is no longer allowing new members.";
+				}
+				else
+				{
+					$response = "This is awkward... I ran into a problem updating the group setting. Try again?";
+				}
+			}
+			elseif($toggleMode == 'off')
+			{
+				$query = "UPDATE groups 
+						  SET membership_locked = 0 
+						  WHERE group_Id = :groupid 
+						  LIMIT 1";
+				$params = array(':groupid' => $post->group_id);
+
+				if($_DB['botstore']->doQuery($query, $params))
+				{
+					$response = "Your group is now open to new members.";
+				}
+				else
+				{
+					$response = "This is awkward... I ran into a problem updating the group setting. Try again?";
+				}
+			}
+			else
+			{
+				// Invalid parameter
+				$response = "I didn't understand that. Try again or ask for /help.";
+			}
+		}
+		elseif($cmd_params > 1)
+		{
+			$response = "That's too many parameters! Try again or ask for /help.";
+		}
+		else
+		{
+			// No params means we need to get the status
+			$query = "CALL group_locked(:groupid)";
+			$params = array(':groupid' => $post->group_id);
+
+			$response = "Group protection is currently ";
+
+			// Change response based on the returned value (1 = yes, 0 = no)
+			if($_DB['botstore']->doQueryAns($query, $params))
+			{
+				$response .= "ENABLED. Any users added to the group will be kicked immediately.";
+			}
+			else
+			{
+				$response .= "DISABLED. Any user can be added to the group.";
 			}
 		}
 

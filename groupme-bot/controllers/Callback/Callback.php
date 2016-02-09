@@ -55,10 +55,16 @@ class Callback extends \Thinker\Framework\Controller
 			if($callback_request->name != "SameBot")
 			{
 				// Detect switches that will return some sort of imagery
-				if($callback_request->contains_command())
+				if($callback_request->system_message())
+				{
+					// GroupMe system message
+					$system_handler = new BotResource\SystemHandler();
+					$system_handler->process_message($callback_request);
+				}
+				elseif($callback_request->contains_command())
 				{
 					// Create a new Command Handler object to handle the requested command
-					$command_handler = new BotResource\CommandHandler($callback_request);
+					$command_handler = new BotResource\CommandHandler();
 					$command_handler->process_message($callback_request);
 				}
 				elseif($callback_request->message_contains("samebot"))
