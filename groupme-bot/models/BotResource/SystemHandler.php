@@ -51,7 +51,6 @@ class SystemHandler extends \Thinker\Framework\Model
 		// If a 1 is returned, the group is enforcing membership lock
 		if($_DB['botstore']->doQueryAns($query, $params))
 		{
-			error_log("Group is locked");
 			// Create the CallbackResponse
 			$message = new CallbackResponse($post->group_id);
 			$response = "";
@@ -66,7 +65,6 @@ class SystemHandler extends \Thinker\Framework\Model
 			// We have a token
 			if($token)
 			{
-				error_log("Token is: " . $token);
 				// Cool! Let's get the list of current members in the group directly from GroupMe
 				$request = new APIRequest("/groups/{$post->group_id}?token=$token", "GET");
 				$result = $request->execute();
@@ -92,12 +90,13 @@ class SystemHandler extends \Thinker\Framework\Model
 						{
 							error_log("Removing $name");
 							// User is not in this group according to us. Get em out!
-							$request = new APIRequest("/groups/{$post->group_id}/members/$mem_id/remove?token=$token", "POST");
-							$removeResult = $request->execute();
+							$removeCurl = curl_init("https://api.groupme.com/v3/groups/{$post->group_id}/members/$member_id/remove?token=$token");
+							$result = curl_exec($removeCurl);
 
 							// Alert the group that someone was removed
-							$message->text = print_r($removeResult, true) . ' | ' . "Tango down: " . $name;
+							$message->text = curl_getinfo($http, CURLINFO_HTTP_CODE) . ' | ' . "Tango down: " . $name;
 							$message->send();
+							curl_close($removeCurl);
 						}
 					}
 				}
