@@ -20,9 +20,11 @@ class SystemHandler extends \Thinker\Framework\Model
 	 */
 	public function process_message($post)
 	{
+		error_log("Processing System Event");
 		// Determine the action that happened in the message
 		if($post->message_contains("has joined the group") || $post->message_contains("has rejoined the group"))
 		{
+			error_log("User added!");
 			// Handle action with member_added()
 			$this->member_added($post);
 		}
@@ -47,6 +49,7 @@ class SystemHandler extends \Thinker\Framework\Model
 		// If a 1 is returned, the group is enforcing membership lock
 		if($_DB['botstore']->doQueryAns($query, $params))
 		{
+			error_log("Group is locked");
 			// Create the CallbackResponse
 			$message = new CallbackResponse($post->group_id);
 			$response = "";
