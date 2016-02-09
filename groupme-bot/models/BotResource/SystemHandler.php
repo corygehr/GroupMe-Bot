@@ -22,7 +22,7 @@ class SystemHandler extends \Thinker\Framework\Model
 	{
 		error_log("Processing System Event");
 		// Determine the action that happened in the message
-		if($post->message_contains("joined") || $post->message_contains("rejoined"))
+		if($post->message_contains("has joined the group") || $post->message_contains("has rejoined the group") || ($post->message_contains("added") && $post->message_contains("to the group")))
 		{
 			error_log("User added!");
 			// Handle action with member_added()
