@@ -815,7 +815,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			else
 			{
 				// Invalid parameter
-				$response = "I didn't understand that. Try again or ask for /help.";
+				$response = "I didn't understand " . $toggleMode . ". Try again or ask for /help.";
 			}
 		}
 		elseif(count($cmd_params) > 1)
