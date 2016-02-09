@@ -13,6 +13,7 @@ return array(
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Factory.php',
+    'GroupMeBot\\BotResource\\APIRequest' => $baseDir . '/groupme-bot/models/BotResource/APIRequest.php',
     'GroupMeBot\\BotResource\\Attachment' => $baseDir . '/groupme-bot/models/BotResource/Attachment.php',
     'GroupMeBot\\BotResource\\BotMentionHandler' => $baseDir . '/groupme-bot/models/BotResource/BotMentionHandler.php',
     'GroupMeBot\\BotResource\\CallbackPost' => $baseDir . '/groupme-bot/models/BotResource/CallbackPost.php',
