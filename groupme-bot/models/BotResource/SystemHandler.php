@@ -83,19 +83,21 @@ class SystemHandler extends \Thinker\Framework\Model
 						// If this block executes, the user was not listed in the group in our records
 						if(!$_DB['botstore']->doQueryAns($query, $params))
 						{
-							error_log("Removing $name");
 							// User is not in this group according to us. Get em out!
 							$url = "https://api.groupme.com/v3/groups/{$post->group_id}/members/$member_id/remove?token=$token";
-							error_log($url);
+
+							// Create the CURL object
 							$removeCurl = curl_init($url);
+							// Set type to POST
 							curl_setopt($removeCurl, CURLOPT_POST, 1);
+							// Execute POST
 							$result = curl_exec($removeCurl);
-							error_log(curl_getinfo($http, CURLINFO_HTTP_CODE));
+							// Close CURL resource
+							curl_close($removeCurl);
 
 							// Alert the group that someone was removed
 							$message->text = "Tango down: " . $name;
 							$message->send();
-							curl_close($removeCurl);
 						}
 					}
 				}
