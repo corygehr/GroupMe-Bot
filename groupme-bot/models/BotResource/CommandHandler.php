@@ -774,9 +774,9 @@ class CommandHandler extends \Thinker\Framework\Model
 		// Get the parameters
 		$cmd_params = $post->get_command_parameters();
 
-		if($cmd_params == 1)
+		if(count($cmd_params) == 1)
 		{
-			$toggleMode = strtolower($cmd_params);
+			$toggleMode = strtolower($cmd_params[0]);
 
 			if($toggleMode == 'on')
 			{
@@ -815,10 +815,10 @@ class CommandHandler extends \Thinker\Framework\Model
 			else
 			{
 				// Invalid parameter
-				$response = "I didn't understand that. Try again or ask for /help.";
+				$response = "I didn't understand " . $toggleMode . ". Try again or ask for /help.";
 			}
 		}
-		elseif($cmd_params > 1)
+		elseif(count($cmd_params) > 1)
 		{
 			$response = "That's too many parameters! Try again or ask for /help.";
 		}
