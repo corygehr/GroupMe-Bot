@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * models/BotResource/APIRequest.php 
-	 * Contains the CallbackResponse class
+	 * Contains the APIRequest class
 	 *
 	 * @author Cory Gehr
 	 */
