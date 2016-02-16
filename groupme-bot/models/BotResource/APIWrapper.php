@@ -111,13 +111,13 @@ class APIWrapper extends \Thinker\Framework\Model
 				else
 				{
 					// Unexpected response
-					return array($url);
+					return array($parsed);
 				}
 			}
 			else
 			{
 				// Return blank array if there's no response
-				return array("No result " . $url);
+				return array();
 			}
 		}
 		else
