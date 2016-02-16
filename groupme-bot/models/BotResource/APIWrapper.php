@@ -34,7 +34,7 @@ class APIWrapper extends \Thinker\Framework\Model
 		$query = "CALL get_group_access_token(:groupid)";
 		$params = array(':groupid' => $group_id);
 
-		$token = $_DB->doQueryAns($query, $params);
+		$token = $_DB['botstore']->doQueryAns($query, $params);
 
 		if($token)
 		{
