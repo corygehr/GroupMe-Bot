@@ -780,6 +780,11 @@ class CommandHandler extends \Thinker\Framework\Model
 
 			if($toggleMode == 'on')
 			{
+				// Get list of current members
+				$api = new APIWrapper($post->group_id);
+
+				$list = $api->group_list_members($post->group_id);
+
 				$query = "UPDATE groups 
 						  SET membership_locked = 1 
 						  WHERE group_Id = :groupid 
@@ -788,7 +793,7 @@ class CommandHandler extends \Thinker\Framework\Model
 
 				if($_DB['botstore']->doQuery($query, $params))
 				{
-					$response = "Your group is no longer allowing new members.";
+					$response = "Your group is no longer allowing new members. Current members are... " + print_r($list, true);
 				}
 				else
 				{
