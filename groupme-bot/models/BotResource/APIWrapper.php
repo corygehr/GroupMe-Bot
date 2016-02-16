@@ -82,7 +82,7 @@ class APIWrapper extends \Thinker\Framework\Model
 		if($this->is_valid()) 
 		{
 			// Create the URL
-			$url = $this->generate_url("/groups/$group_id/");
+			$url = $this->generate_url("/groups/$group_id");
 
 			// Create options
 			$options = array(
