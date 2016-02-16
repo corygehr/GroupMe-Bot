@@ -787,13 +787,13 @@ class CommandHandler extends \Thinker\Framework\Model
 
 				$query = "UPDATE groups 
 						  SET membership_locked = 1 
-						  WHERE group_Id = :groupid 
+						  WHERE group_id = :groupid 
 						  LIMIT 1";
 				$params = array(':groupid' => $post->group_id);
 
 				if($_DB['botstore']->doQuery($query, $params))
 				{
-					$response = "Your group is no longer allowing new members. Current members are... " + print_r($list, true);
+					$response = "Your group is no longer allowing new members. Current members are... " . print_r($list, true);
 				}
 				else
 				{
