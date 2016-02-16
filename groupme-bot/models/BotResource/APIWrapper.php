@@ -111,19 +111,19 @@ class APIWrapper extends \Thinker\Framework\Model
 				else
 				{
 					// Unexpected response
-					return array("Invalid keys");
+					return array();
 				}
 			}
 			else
 			{
 				// Return blank array if there's no response
-				return array("No result");
+				return array("No result " . $url);
 			}
 		}
 		else
 		{
 			// Return null array if the wrapper is not valid
-			return array("Invalid wrapper");
+			return array();
 		}
 	}
 
