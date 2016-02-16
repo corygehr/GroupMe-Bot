@@ -100,7 +100,7 @@ class APIWrapper extends \Thinker\Framework\Model
 			if($result)
 			{
 				// Parse JSON
-				$parsed = json_decode($parsed, true);
+				$parsed = json_decode($result, true);
 
 				// Check if we got the expected result
 				if(array_key_exists('response', $parsed) && array_key_exists('members', $parsed['response']))
