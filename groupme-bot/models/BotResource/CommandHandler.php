@@ -793,7 +793,7 @@ class CommandHandler extends \Thinker\Framework\Model
 
 				if($_DB['botstore']->doQuery($query, $params))
 				{
-					$response = "Your group is no longer allowing new members. Current members are... " . print_r($list, true);
+					$response = "Your group is no longer allowing new members. Only the current group members can leave and rejoin the group.";
 				}
 				else
 				{

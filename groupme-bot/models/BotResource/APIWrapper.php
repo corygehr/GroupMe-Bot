@@ -111,7 +111,7 @@ class APIWrapper extends \Thinker\Framework\Model
 				else
 				{
 					// Unexpected response
-					return array($parsed);
+					return array();
 				}
 			}
 			else
