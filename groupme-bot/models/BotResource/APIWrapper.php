@@ -34,7 +34,7 @@ class APIWrapper extends \Thinker\Framework\Model
 		$query = "CALL get_group_access_token(:groupid)";
 		$params = array(':groupid' => $group_id);
 
-		$token = $_DB->doQueryAns($query, $params);
+		$token = $_DB['botstore']->doQueryAns($query, $params);
 
 		if($token)
 		{
@@ -82,7 +82,7 @@ class APIWrapper extends \Thinker\Framework\Model
 		if($this->is_valid()) 
 		{
 			// Create the URL
-			$url = $this->generate_url("/groups/$group_id/");
+			$url = $this->generate_url("/groups/$group_id");
 
 			// Create options
 			$options = array(
@@ -100,7 +100,7 @@ class APIWrapper extends \Thinker\Framework\Model
 			if($result)
 			{
 				// Parse JSON
-				$parsed = json_decode($parsed, true);
+				$parsed = json_decode($result, true);
 
 				// Check if we got the expected result
 				if(array_key_exists('response', $parsed) && array_key_exists('members', $parsed['response']))

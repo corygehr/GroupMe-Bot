@@ -787,7 +787,7 @@ class CommandHandler extends \Thinker\Framework\Model
 
 				$query = "UPDATE groups 
 						  SET membership_locked = 1 
-						  WHERE group_Id = :groupid 
+						  WHERE group_id = :groupid 
 						  LIMIT 1";
 				$params = array(':groupid' => $post->group_id);
 
