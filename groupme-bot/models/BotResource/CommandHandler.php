@@ -622,6 +622,76 @@ class CommandHandler extends \Thinker\Framework\Model
 	}
 
 	/**
+	 * sunshine_display()
+	 * Gets an unread sunshines and sends it to the group
+	 *
+	 * @author Cory Gehr
+	 * @access private
+	 * @param command Command used to call this method
+	 * @param post CallbackPost object containing the original message
+	 */
+	private function sunshine_display($command, $post)
+	{
+		global $_DB;
+
+		// Create the response object
+		$message = new CallbackResponse($post->group_id);
+		$response = "";
+
+		// Get a random sunshine for the group that hasn't been displayed yet
+		$query = "SELECT sunshine_id, message
+				  FROM sunshine_queue 
+				  WHERE group_id = :groupId 
+				  AND displayed IS NULL 
+				  ORDER BY RAND() 
+				  LIMIT 1";
+		$params = array(':groupId' => $post->group_id);
+
+		$result = $_DB['botstore']->doQueryOne($query, $params);
+
+		if(count($result) > 0)
+		{
+			// Update sunshine as being displayed
+			$query = "UPDATE sunshine_queue 
+					  SET displayed = NOW() 
+					  WHERE sunshine_id = :id 
+					  LIMIT 1";
+			$params = array(':id' => $result['sunshine_id']);
+
+			// Execute query
+			$_DB['botstore']->doQuery($query, $params);
+
+			// Set response to the message text
+			$response = '"' + $result['message'] + '"';
+		}
+		else
+		{
+			// Do we send an error?
+			$cmd_params = $post->get_command_parameters();
+
+			if(count($cmd_params) >= 1)
+			{
+				// Don't display an error, I know the directions are to say 'silent'
+				// But realistically if any params are sent we don't want to bug the 
+				// group if there was a typo
+				return;
+			}
+			else
+			{
+				// Send an error response
+				$response = "There aren't any sunshines in the queue! Submit some at https://groupme.corygehr.com/sunshines.";
+			}
+		}
+
+		if(!empty($response))
+		{
+			// Write the message text and send it
+			$message->text = $response;
+			$message->send();
+		}
+	}
+
+	/**
 	 * tag_image()
 	 * Tags an image
 	 *
