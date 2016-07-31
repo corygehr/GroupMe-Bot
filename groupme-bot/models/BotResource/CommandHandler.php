@@ -649,7 +649,7 @@ class CommandHandler extends \Thinker\Framework\Model
 
 		$result = $_DB['botstore']->doQueryOne($query, $params);
 
-		if(count($result) > 0)
+		if($result)
 		{
 			// Update sunshine as being displayed
 			$query = "UPDATE sunshine_queue 
@@ -662,7 +662,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			$_DB['botstore']->doQuery($query, $params);
 
 			// Set response to the message text
-			$response = '"' + $result['message'] + '"';
+			$response = '"' . $result['message'] . '"';
 		}
 		else
 		{
