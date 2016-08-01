@@ -10,6 +10,9 @@ namespace GroupMeBot;
 
 class Callback extends \Thinker\Framework\Controller
 {
+	// Allow controller to be accessed without normal auth routines
+	public static $allowOpenAccess = true;
+
 	/**
 	 * defaultSubsection()
 	 * Returns the default subsection for this Controller

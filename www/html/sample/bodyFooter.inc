@@ -10,7 +10,6 @@
 	</div>
 	<div id='footer-wrapper'>
 		<p>
-			THINKer Copyright &copy; 2014 Cory Gehr, All rights reserved.<br />
-			This copy available exclusively to THON, FTK!
+			Copyright &copy; 2016 Cory Gehr, All rights reserved.<br />
 		</p>
 	</div>
