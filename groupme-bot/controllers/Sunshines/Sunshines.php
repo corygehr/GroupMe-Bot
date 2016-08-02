@@ -153,7 +153,7 @@ class Sunshines extends \Thinker\Framework\Controller
 				// Process results
 				foreach($list as $l)
 				{
-					$results[$l['group_id']] => $l['name'];
+					$results[$l['group_id']] = $l['name'];
 				}
 
 				return $results;
