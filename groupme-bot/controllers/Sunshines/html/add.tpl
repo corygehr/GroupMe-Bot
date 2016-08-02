@@ -24,6 +24,7 @@
 ?>
 <form method="post" action="/Sunshines/add">
      <fieldset>
+          <legend>Sunshine</legend>
           <p>
                <select id="group" name="group">
                     <option>Select a Group</option>
