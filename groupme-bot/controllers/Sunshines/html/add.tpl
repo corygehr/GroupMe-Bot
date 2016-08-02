@@ -22,7 +22,7 @@
 <?php
      }
 ?>
-<form method="post" action="/Sunshines/add">
+<form method="post">
      <fieldset>
           <legend>Sunshine</legend>
           <p>
