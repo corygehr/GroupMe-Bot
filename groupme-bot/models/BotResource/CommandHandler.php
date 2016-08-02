@@ -679,6 +679,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			else
 			{
 				// Send an error response
+				$response = "There aren't any sunshines in the queue! Submit some at https://groupme.corygehr.com/Sunshines/add.";
 			}
 		}
 
