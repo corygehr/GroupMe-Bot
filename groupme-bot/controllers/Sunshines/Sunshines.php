@@ -75,26 +75,41 @@ class Sunshines extends \Thinker\Framework\Controller
 				// Check if values exist
 				if($group && $message && $when)
 				{
-					// Submit
-					switch($when)
+					// Verify user has access to the group
+					$query = "SELECT COUNT(1)
+							  FROM user_groups 
+							  WHERE user_id = :userId 
+							  AND group_id = :groupId
+							  LIMIT 1";
+					$params = array(':userId' => $_SESSION['USER_ID'], ':groupId' => $group);
+
+					if($_DB['botstore']->doQueryAns($query, $params))
 					{
-						case "now":
-							if($this->show_now($group, $message))
-							{
-								$this->set('message', "Sent successfully!");
-							}
-						break;
+						// Submit
+						switch($when)
+						{
+							case "now":
+								if($this->show_now($group, $message))
+								{
+									$this->set('message', "Sent successfully!");
+								}
+							break;
 
-						case "later":
-							if($this->add_to_database($group, $message))
-							{
-								$this->set('message', "Submitted successfully!");
-							}
-						break;
+							case "later":
+								if($this->add_to_database($group, $message))
+								{
+									$this->set('message', "Submitted successfully!");
+								}
+							break;
 
-						default:
-							$this->set('message', "Invalid time option.");
-						break;
+							default:
+								$this->set('message', "Invalid time option.");
+							break;
+						}
+					}
+					else
+					{
+						$this->set('message', "Stop trying to post to groups you don't belong in.");
 					}
 				}
 				else
