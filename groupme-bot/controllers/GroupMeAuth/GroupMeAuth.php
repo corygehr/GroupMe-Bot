@@ -92,7 +92,7 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 			// Log in as the user with this token
 			$query = "SELECT user_id, name 
 					  FROM users 
-					  WHERE token = :token 
+					  WHERE access_token = :token 
 					  LIMIT 1";
 			$params = array(':token' => $token);
 
