@@ -24,7 +24,7 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 		if($token)
 		{
 			// Process token
-			if($this->process_token())
+			if($this->process_token($token))
 			{
 				// Redirect to sunshine portal
 				\Thinker\Http\Redirect::go("Sunshines", "add");
