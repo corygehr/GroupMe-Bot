@@ -199,7 +199,7 @@ class Sunshines extends \Thinker\Framework\Controller
 		// Create a callback response object to send the message
 		$sender = new \GroupMeBot\BotResource\CallbackResponse($group);
 
-		$sender->text = $message;
+		$sender->text = 'New Sunshine! "' . $message . '"';
 		$sender->send();
 
 		if($sender->message_sent())
