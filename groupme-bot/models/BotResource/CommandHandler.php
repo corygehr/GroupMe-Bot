@@ -662,7 +662,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			$_DB['botstore']->doQuery($query, $params);
 
 			// Set response to the message text
-			$response = '"' + $result['message'] + '"';
+			$response = 'New Sunshine! "' + $result['message'] + '"';
 		}
 		else
 		{
