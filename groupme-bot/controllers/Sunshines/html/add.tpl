@@ -26,7 +26,7 @@
      <fieldset>
           <legend>Sunshine</legend>
           <p>
-               <label for="group">Group Name</label>
+               <label for="group">Group Name</label><br>
                <select id="group" name="group">
                     <option>Select a Group</option>
 <?php
@@ -42,11 +42,11 @@
                </select>
           </p>
           <p>
-               <label for="message">Your Message</label>
+               <label for="message">Your Message</label><br>
                <textarea id="message" name="message"></textarea>
           </p>
           <p>
-               <label for="when">When should the sunshine appear?</label>
+               <label for="when">When should the sunshine appear?</label><br>
                <select id="when" name="when">
                     <option>Select an Option</option>
                     <option value="later">Later</option>
