@@ -140,7 +140,7 @@ class Sunshines extends \Thinker\Framework\Controller
 					  FROM groups g 
 				  	  JOIN users_groups ug ON ug.group_id = g.group_id
 					  WHERE ug.user_id = :userId
-					  ORDER BY g.name ASC";
+					  ORDER BY g.name";
 			$params = array(':userId' => $user_id);
 
 			$list = $_DB['botstore']->doQueryArr($query, $params);

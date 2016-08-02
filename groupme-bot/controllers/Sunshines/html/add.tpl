@@ -6,7 +6,7 @@
      * @author Cory Gehr
      */
 ?>
-<h1>Sunshines!</h1>
+<h1>Hi, <?php echo $_SESSION['USER_NAME']; ?>!</h1>
 <p>
 	Use the form below to write an anonymous sunshine.
 </p>
@@ -25,6 +25,16 @@
 <form method="post">
      <select id="group" name="group">
           <option>Select a Group</option>
+<?php
+     $groups = $this->get('groups');
+
+     foreach($groups as $id => $name)
+     {
+?>
+     <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+<?php
+     }
+?>
      </select>
      <textarea id="message" name="message"></textarea>
      <select id="when" name="when">

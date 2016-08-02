@@ -110,7 +110,29 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 			else
 			{
 				// Figure out who it is
-				
+				// Create an API Request
+				$request = new APIRequest("/users/me", "GET", array("token" => $token));
+				// Execute the request
+				$user_data = $request->execute();
+
+				// If we have data, add it to the user's entry
+				if($user_data)
+				{
+					$query = "UPDATE users
+							  SET access_token = :token 
+							  WHERE user_id = :userId 
+							  LIMIT 1";
+					$params = array(':token' => $token, ':userId' => $user_data["response"]["id"]);
+
+					$_DB['botstore']->doQuery($query, $params);
+
+					// Set session variables and end sequence
+					$_SESSION['GROUPME_TOKEN'] = $token;
+					$_SESSION['USER_ID'] = $user_data["response"]["id"];
+					$_SESSION['USER_NAME'] = $user_data["response"]["name"];
+
+					return true;
+				}
 			}
 		}
 

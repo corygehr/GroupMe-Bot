@@ -23,7 +23,9 @@ class APIRequest extends \Thinker\Framework\Model
 	 *
 	 * @author Cory Gehr
 	 * @access public
-	 * @param string Request Path
+	 * @param string Request Path 
+	 * @param string HTTP Method
+	 * @param string[] Query Parameters
 	 */
 	public function __construct($path = "", $method = "GET", $params = array())
 	{
