@@ -178,7 +178,7 @@ class Sunshines extends \Thinker\Framework\Controller
 
 
 		// Create a callback response object to send the message
-		$message = new CallbackResponse($group_id);
+		$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
 
 		$message->text = $text;
 		$message->send();
