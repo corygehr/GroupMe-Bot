@@ -55,7 +55,7 @@ class Sunshines extends \Thinker\Framework\Controller
 
 		if($groups)
 		{
-			$this->get('groups', $groups);
+			$this->set('groups', $groups);
 		}
 		else
 		{
