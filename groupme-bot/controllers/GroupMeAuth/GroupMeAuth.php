@@ -96,7 +96,7 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 					  LIMIT 1";
 			$params = array(':token' => $token);
 
-			$user = $_DB['botstore']->doQueryAns($query, $params);
+			$user = $_DB['botstore']->doQueryOne($query, $params);
 
 			if($user)
 			{
