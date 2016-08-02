@@ -10,6 +10,11 @@ namespace GroupMeBot;
 
 class TaskRunner extends \Thinker\Framework\Controller
 {
-	
+	/**
+	 * showSunshine()
+	 * Runs the showSunshine routine
+	 *
+	 * @access public
+	 */
 }
 ?>

@@ -79,7 +79,7 @@ class Sunshines extends \Thinker\Framework\Controller
 				{
 					// Verify user has access to the group
 					$query = "SELECT COUNT(1)
-							  FROM user_groups 
+							  FROM users_groups 
 							  WHERE user_id = :userId 
 							  AND group_id = :groupId
 							  LIMIT 1";
