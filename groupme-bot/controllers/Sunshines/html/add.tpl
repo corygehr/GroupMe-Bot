@@ -16,7 +16,7 @@
 ?>
 <p>
      <p>
-          <?php echo $this->get('message'); ?>
+          <b><?php echo $this->get('message'); ?></b>
      </p>
 </p>
 <?php
