@@ -23,34 +23,36 @@
      }
 ?>
 <form method="post" action="/Sunshines/add">
-     <p>
-          <select id="group" name="group">
-               <option>Select a Group</option>
+     <fieldset>
+          <p>
+               <select id="group" name="group">
+                    <option>Select a Group</option>
 <?php
      $groups = $this->get('groups');
 
      foreach($groups as $id => $name)
      {
 ?>
-               <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                    <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
 <?php
      }
 ?>
-          </select>
-     </p>
-     <p>
-          <textarea id="message" name="message"></textarea>
-     </p>
-     <p>
-          <select id="when" name="when">
-               <option value="later">Later</option>
-               <option value="now">Now</option>
-          </select>
-     </p>
-     <p>
-          Selecting 'Later' means your sunshine may appear 
-          at 12PM (EST) in the selected group (if it is chosen). 
-          'Now' will push it to the group immediately.
-     </p>
-     <input type="submit" value="Submit" />
+               </select>
+          </p>
+          <p>
+               <textarea id="message" name="message"></textarea>
+          </p>
+          <p>
+               <select id="when" name="when">
+                    <option value="later">Later</option>
+                    <option value="now">Now</option>
+               </select>
+          </p>
+          <p>
+               Selecting 'Later' means your sunshine may appear 
+               at 12PM (EST) in the selected group (if it is chosen). 
+               'Now' will push it to the group immediately.
+          </p>
+          <input type="submit" value="Submit" />
+     </fieldset>
 </form>
