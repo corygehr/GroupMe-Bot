@@ -43,7 +43,7 @@ class TaskRunner extends \Thinker\Framework\Controller
 				$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
 
 				// Set response to the message text
-				$message->text = 'New Sunshine! "' . $result['message'] . '"';
+				$message->text = 'Sunshine! "' . $result['message'] . '"';
 
 				// Send message
 				$message->send();
