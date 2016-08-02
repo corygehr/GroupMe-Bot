@@ -23,8 +23,8 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 
 		if($token)
 		{
-			// Receive token
-			if($this->receiveToken())
+			// Process token
+			if($this->process_token())
 			{
 				// Redirect to sunshine portal
 				\Thinker\Http\Redirect::go("Sunshines", "add");
@@ -76,14 +76,14 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 	}
 
 	/**
-	 * receiveToken()
+	 * process_token()
 	 * Processes an OAuth Token from GroupMe
 	 *
 	 * @access private
 	 * @param token Token value
 	 * @return True on Success, False on Failure
 	 */
-	private function receiveToken($token)
+	private function process_token($token)
 	{
 		global $_DB;
 
