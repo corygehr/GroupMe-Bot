@@ -50,6 +50,8 @@ class Sunshines extends \Thinker\Framework\Controller
 	 */
 	public function add()
 	{
+		global $_DB;
+
 		// Provide user groups
 		$groups = $this->get_user_groups($_SESSION['USER_ID']);
 
