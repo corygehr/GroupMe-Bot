@@ -76,6 +76,26 @@ class Sunshines extends \Thinker\Framework\Controller
 				if($group && $message && $when)
 				{
 					// Submit
+					switch($when)
+					{
+						case "now":
+							if($this->show_now($group, $message))
+							{
+								$this->set('message', "Sent successfully!");
+							}
+						break;
+
+						case "later":
+							if($this->add_to_database($group, $message))
+							{
+								$this->set('message', "Submitted successfully!");
+							}
+						break;
+
+						default:
+							$this->set('message', "Invalid time option.");
+						break;
+					}
 				}
 				else
 				{
@@ -170,12 +190,11 @@ class Sunshines extends \Thinker\Framework\Controller
 	 * @author Cory Gehr
 	 * @return True on Success, False on Failure
 	 */
-	private function show_now()
+	private function show_now($group, $message)
 	{
 		global $_DB;
 
 		// Sanitize input / validate
-
 
 		// Create a callback response object to send the message
 		$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
@@ -186,7 +205,7 @@ class Sunshines extends \Thinker\Framework\Controller
 		if($message->message_sent())
 		{
 			// Add contents to DB for tracking
-			return $this->add_to_database(true);
+			return $this->add_to_database($group, $message, true);
 		}
 		else
 		{
