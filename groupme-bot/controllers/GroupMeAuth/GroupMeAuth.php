@@ -111,7 +111,7 @@ class GroupMeAuth extends \Thinker\Framework\Controller
 			{
 				// Figure out who it is
 				// Create an API Request
-				$request = new \GroupMeBot\BotResource\APIRequest("/users/me?token=".$token, "GET";
+				$request = new \GroupMeBot\BotResource\APIRequest("/users/me?token=".$token, "GET");
 				// Execute the request
 				$user_data = $request->execute();
 
