@@ -39,6 +39,15 @@ class TaskRunner extends \Thinker\Framework\Controller
 			// Continue if we have a result, do nothing if now
 			if($result)
 			{
+				// Create the response object
+				$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
+
+				// Set response to the message text
+				$message->text = 'New Sunshine! "' + $result['message'] + '"';
+
+				// Send message
+				$message->send();
+
 				// Update sunshine as being displayed
 				$query = "UPDATE sunshine_queue 
 						  SET displayed = NOW() 
@@ -48,15 +57,6 @@ class TaskRunner extends \Thinker\Framework\Controller
 
 				// Execute query
 				$_DB['botstore']->doQuery($query, $params);
-
-				// Create the response object
-				$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
-
-				// Set response to the message text
-				$message->text = 'New Sunshine! "' + $result['message'] + '"';
-
-				// Send message
-				$message->send();
 			}
 		}
 		else
