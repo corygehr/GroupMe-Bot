@@ -197,9 +197,9 @@ class Sunshines extends \Thinker\Framework\Controller
 		// Sanitize input / validate
 
 		// Create a callback response object to send the message
-		$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
+		$message = new \GroupMeBot\BotResource\CallbackResponse($group);
 
-		$message->text = $text;
+		$message->text = $message;
 		$message->send();
 
 		if($message->message_sent())
