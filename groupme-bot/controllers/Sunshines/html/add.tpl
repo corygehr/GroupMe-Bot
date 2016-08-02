@@ -22,7 +22,7 @@
 <?php
      }
 ?>
-<form method="post">
+<form method="post" action="/Sunshines/add">
      <p>
           <select id="group" name="group">
                <option>Select a Group</option>
