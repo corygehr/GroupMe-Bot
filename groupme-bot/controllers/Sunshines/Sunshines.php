@@ -36,7 +36,7 @@ class Sunshines extends \Thinker\Framework\Controller
 
 		// Verify session variables are set
 		// If not, send them to GroupMeAuth
-		if(!array_key_exists("GROUPME_TOKEN", $_SESSION) || !array_key_exists("USER_ID"))
+		if(!array_key_exists("GROUPME_TOKEN", $_SESSION) || !array_key_exists("USER_ID", $_SESSION))
 		{
 			\Thinker\Http\Redirect::go("GroupMeAuth", "redirect");
 		}
