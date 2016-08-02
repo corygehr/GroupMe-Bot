@@ -51,7 +51,7 @@
           </p>
           <p>
                Selecting 'Later' means your sunshine may appear 
-               at 12PM (EST) in the selected group (if it is chosen). 
+               at 12:00PM (EST) in the selected group (if it is chosen). 
                'Now' will push it to the group immediately.
           </p>
           <input type="submit" value="Submit" />
