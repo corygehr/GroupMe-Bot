@@ -50,7 +50,7 @@ class TaskRunner extends \Thinker\Framework\Controller
 				$_DB['botstore']->doQuery($query, $params);
 
 				// Create the response object
-				$message = new CallbackResponse($group_id);
+				$message = new \GroupMeBot\BotResource\CallbackResponse($group_id);
 
 				// Set response to the message text
 				$message->text = 'New Sunshine! "' + $result['message'] + '"';
