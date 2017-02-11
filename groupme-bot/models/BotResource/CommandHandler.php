@@ -319,6 +319,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			    $context = stream_context_create($options);
 			    $result = file_get_contents("https://image.groupme.com/pictures", false, $context);
 			    $message->text = print_r($result, true);
+			    $message->send();
 			    return;
 			    // Get result URL
 			    $result_json = json_decode($result, true);
