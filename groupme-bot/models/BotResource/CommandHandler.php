@@ -242,6 +242,109 @@ class CommandHandler extends \Thinker\Framework\Model
 	}
 
 	/**
+         * giphy_post()
+	 * Displays a GIF from Giphy
+	 *
+	 * @author Cory Gehr
+	 * @access private
+	 * @param command Command used to call this method
+	 * @param post CallBackPost object containing the original message
+	 */
+	private function giphy_post($command, $post)
+	{
+		// Create the CallbackResponse
+		$message = new CallbackResponse($post->group_id);
+		
+		// Get the parameters associated with this command
+		$cmd_params = $post->get_command_parameters();
+		
+		// Expecting only one parameter
+		if(count($cmd_params) == 0 || count($cmd_params) > 1) {
+	            // Too many or two few parameters
+		    $message->text = "I didn't get right number of parameters! For help, try " . $post->command_notation . "help giphy.";
+		}
+		else {
+		    // Correct number of parameters
+		    // Get GIPHY API URL and Key
+		    $query = "CALL get_global('GIPHY_API_KEY')";
+		    $api_key = $_DB['botstore']->doQueryAns($query);
+		    $query = "CALL get_global('GIPHY_API_URL')";
+		    $giphy_url = $_DB['botstore']->doQueryAns($query);
+		    $query = "CALL get_global('API_ACCESS_TOKEN')";
+		    $access_token = $_DB['botstore']->doQueryAns($query);
+			
+		    // Ensure we have an API key and URL
+		    if($api_key && $giphy_url && $access_token) {
+			// Replace tag spaces with '+' for proper URL formatting
+			$tag = str_replace(" ", "+", $cmd_params[0]);
+			    
+			// Create request to get an image
+			$giphy_url .= "/random?api_key=$api_key&tag=$tag";
+			    
+			// Set headers
+			$options = array(
+			    'http' => array(
+			        'header'  => "Content-type: application/json\r\n",
+			        'method'  => 'GET'
+			    )
+			);
+			
+			// Open stream
+			$context = stream_context_create($options);
+			$result = file_get_contents($giphy_url, false, $context);
+			
+			// Parse result
+			$details = json_decode($result, true);
+			    
+			// Check for success
+			if(array_key_exists("data", $details) && array_key_exists("image_url", $details["data"])) {
+			    // Download image to temporary directory (so we can upload to GroupMe - required)
+			    file_put_contents("tmpgif.gif", fopen($details["data"]["image_url"], 'r'));
+		            // Get base64 encoding of GIF
+			    $img_data = base64_encode(file_get_contents("tmpgif.gif"));
+		            // POST to GroupMe API
+			    // Set headers
+			    $options = array(
+			    'http' => array(
+				'header'  => "Content-type: application/json\r\n" .
+				             "X-Access-Token: $access_token",
+				'method'  => 'POST',
+				'content' => $img_data
+			        )
+			    );
+
+			    // Open stream
+			    $context = stream_context_create($options);
+			    $result = file_get_contents("https://image.groupme.com/pictures", false, $context);
+				
+			    // Get result URL
+			    $result_json = json_decode($result, true);
+				
+			    // Ensure we got a result
+			    if($result_json && array_contains_key("payload", $result_json) && array_contains_key("image_url", $result_json["payload"])) {
+				// Create a new image attachment and execute
+				$attachment = new Image();
+				$attachment->url = $result_json["payload"]["image_url"];
+				$message->add_attachment($attachment);
+			    }
+			    else {
+				$message->text = "I had an issue getting GroupMe to play along. Try again?";    
+			    }
+			}
+			else {
+			    $message->text = "Sorry! I didn't get a response for that tag.";	
+			}
+		    }
+		    else {
+			$message->text = "I don't have what I need to talk to Giphy... yell at Cory.";
+		    }
+		}
+		
+		// Send message
+		$message->send();
+	}
+	
+	/**
 	 * help()
 	 * Displays a help message with the specified parameters
 	 *
