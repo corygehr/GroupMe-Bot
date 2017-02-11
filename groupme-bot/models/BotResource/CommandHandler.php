@@ -252,6 +252,8 @@ class CommandHandler extends \Thinker\Framework\Model
 	 */
 	private function giphy_post($command, $post)
 	{
+		global $_DB;
+		
 		// Create the CallbackResponse
 		$message = new CallbackResponse($post->group_id);
 		
