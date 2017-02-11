@@ -300,38 +300,8 @@ class CommandHandler extends \Thinker\Framework\Model
 			    
 			// Check for success
 			if(array_key_exists("data", $details) && array_key_exists("image_url", $details["data"])) {
-			    // Download image to temporary directory (so we can upload to GroupMe - required)
-			    file_put_contents("tmpgif.gif", fopen($details["data"]["image_url"], 'r'));
-		            // Get base64 encoding of GIF
-			    $img_data = base64_encode(file_get_contents("tmpgif.gif"));
-		            // POST to GroupMe API
-			    // Set headers
-			    $options = array(
-			    'http' => array(
-				'header'  => "Content-type: image/gif\r\n" .
-				             "X-Access-Token: $access_token",
-				'method'  => 'POST',
-				'content' => $img_data
-			        )
-			    );
-
-			    // Open stream
-			    $context = stream_context_create($options);
-			    $result = file_get_contents("https://image.groupme.com/pictures", false, $context);
-				
-			    // Get result URL
-			    $result_json = json_decode($result, true);
-				
-			    // Ensure we got a result
-			    if($result_json && array_contains_key("payload", $result_json) && array_contains_key("image_url", $result_json["payload"])) {
-				// Create a new image attachment and execute
-				$attachment = new Image();
-				$attachment->url = $result_json["payload"]["image_url"];
-				$message->add_attachment($attachment);
-			    }
-			    else {
-				$message->text = "I had an issue getting GroupMe to play along. Try again? " . var_dump($result);    
-			    }
+		            // Post link directly to group
+			    $message->text = $details["data"]["image_url"];
 			}
 			else {
 			    $message->text = "Sorry! I didn't get a response for that tag.";	
