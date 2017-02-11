@@ -308,7 +308,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			    // Set headers
 			    $options = array(
 			    'http' => array(
-				'header'  => "Content-type: application/json\r\n" .
+				'header'  => "Content-type: image/gif\r\n" .
 				             "X-Access-Token: $access_token",
 				'method'  => 'POST',
 				'content' => $img_data
@@ -318,9 +318,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			    // Open stream
 			    $context = stream_context_create($options);
 			    $result = file_get_contents("https://image.groupme.com/pictures", false, $context);
-			    $message->text = print_r($result, true);
-			    $message->send();
-			    return;
+				
 			    // Get result URL
 			    $result_json = json_decode($result, true);
 				
