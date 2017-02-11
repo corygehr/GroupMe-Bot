@@ -330,7 +330,7 @@ class CommandHandler extends \Thinker\Framework\Model
 				$message->add_attachment($attachment);
 			    }
 			    else {
-				$message->text = "I had an issue getting GroupMe to play along. Try again?";    
+				$message->text = "I had an issue getting GroupMe to play along. Try again? " . print_r($result, true);    
 			    }
 			}
 			else {
