@@ -242,6 +242,81 @@ class CommandHandler extends \Thinker\Framework\Model
 	}
 
 	/**
+         * giphy_post()
+	 * Displays a GIF from Giphy
+	 *
+	 * @author Cory Gehr
+	 * @access private
+	 * @param command Command used to call this method
+	 * @param post CallBackPost object containing the original message
+	 */
+	private function giphy_post($command, $post)
+	{
+		global $_DB;
+		
+		// Create the CallbackResponse
+		$message = new CallbackResponse($post->group_id);
+		
+		// Get the parameters associated with this command
+		$cmd_params = $post->get_command_parameters();
+		
+		// Expecting only one parameter
+		if(count($cmd_params) == 0 || count($cmd_params) > 1) {
+	            // Too many or two few parameters
+		    $message->text = "I didn't get right number of parameters! For help, try " . $post->command_notation . "help giphy.";
+		}
+		else {
+		    // Correct number of parameters
+		    // Get GIPHY API URL and Key
+		    $query = "CALL get_global('GIPHY_API_KEY')";
+		    $api_key = $_DB['botstore']->doQueryAns($query);
+		    $query = "CALL get_global('GIPHY_API_URL')";
+		    $giphy_url = $_DB['botstore']->doQueryAns($query);
+		    $query = "CALL get_global('API_ACCESS_TOKEN')";
+		    $access_token = $_DB['botstore']->doQueryAns($query);
+			
+		    // Ensure we have an API key and URL
+		    if($api_key && $giphy_url && $access_token) {
+			// Replace tag spaces with '+' for proper URL formatting
+			$tag = str_replace(" ", "+", $cmd_params[0]);
+			    
+			// Create request to get an image
+			$giphy_url .= "/random?api_key=$api_key&tag=$tag";
+			    
+			// Set headers
+			$options = array(
+			    'http' => array(
+			        'header'  => "Content-type: application/json\r\n",
+			        'method'  => 'GET'
+			    )
+			);
+			
+			// Open stream
+			$context = stream_context_create($options);
+			$result = file_get_contents($giphy_url, false, $context);
+			
+			// Parse result
+			$details = json_decode($result, true);
+			    
+			// Check for success
+			if(array_key_exists("data", $details) && array_key_exists("image_url", $details["data"])) {
+		            // Post link directly to group
+			    $message->text = $details["data"]["image_url"];
+			}
+			else {
+			    $message->text = "Sorry! I didn't get a response for that tag.";	
+			}
+		    }
+		    else {
+			$message->text = "I don't have what I need to talk to Giphy... yell at Cory.";
+		    }
+		}
+		
+		// Send message
+		$message->send();
+	}
+	
+	/**
 	 * help()
 	 * Displays a help message with the specified parameters
 	 *
@@ -662,7 +737,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			$_DB['botstore']->doQuery($query, $params);
 
 			// Set response to the message text
-			$response = '"' . $result['message'] . '"';
+			$response = 'Sunshine! "' . $result['message'] . '"';
 		}
 		else
 		{
@@ -679,7 +754,7 @@ class CommandHandler extends \Thinker\Framework\Model
 			else
 			{
 				// Send an error response
-				$response = "There aren't any sunshines in the queue! Submit some at https://groupme.corygehr.com/sunshines.";
+				$response = "There aren't any sunshines in the queue! Submit some at https://groupme.corygehr.com/Sunshines/add.";
 			}
 		}
 
